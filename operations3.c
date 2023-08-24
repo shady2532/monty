@@ -1,6 +1,31 @@
 #include "monty.h"
 
 /**
+ * nop - does literally nothing
+ * @stack: pointer to the head node pointer of stack
+ * @nline: the line number
+ * Return: Nothing.
+ */
+void nop(stack_t **stack, unsigned int nline)
+{
+	(void)stack;
+	(void)nline;
+}
+
+/**
+ * _isalpha - checks if int is in alphabet
+ * @c: int
+ * Return: 1 if yes, 0 if no
+ */
+int _isalpha(int c)
+{
+	if (((c >= 'a') && (c <= 'z')) || ((c >= 'A') && (c <= 'Z')))
+		return (1);
+	else
+		return (0);
+}
+
+/**
  * rotlop - rotates stack to left
  * @stack: pointer to the head node pointer of stack
  * @nline: the line number
@@ -56,43 +81,4 @@ void rotr(stack_t **stack, unsigned int nline)
 	tmp->prev = last;
 	last->next = tmp;
 	*stack = last;
-}
-
-/**
- * qpush - pushes for queue instead of stack
- * @stack: pointer to the head node pointer of stack
- * @nline: the line number
- * Return: Nothing.
- */
-void qpush(stack_t **stack, unsigned int nline)
-{
-	stack_t *last, *new;
-
-	if (stack == NULL)
-	{
-		fprintf(stderr, "L%d: stack not found\n", nline);
-		exit(EXIT_FAILURE);
-	}
-
-	new = malloc(sizeof(stack_t));
-	if (new == NULL)
-	{
-		fprintf(stderr, "Error: malloc failed\n");
-		free_stack(stack);
-		exit(EXIT_FAILURE);
-	}
-
-	last = NULL;
-	if (*stack)
-	{
-		last = *stack;
-		while (last->next)
-			last = last->next;
-		last->next = new;
-	}
-	else
-		*stack = new;
-	new->prev = last;
-	new->next = NULL;
-	new->n = arg.arg;
 }

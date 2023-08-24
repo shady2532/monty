@@ -34,22 +34,67 @@ void push(stack_t **stack, unsigned int nline)
 }
 
 /**
- * pall - prints the data of all nodes in stack
+ * qpush - pushes for queue instead of stack
  * @stack: pointer to the head node pointer of stack
  * @nline: the line number
- *
  * Return: Nothing.
  */
-void pall(stack_t **stack, unsigned int nline)
+void qpush(stack_t **stack, unsigned int nline)
 {
-	stack_t *temp;
-	(void)nline;
+	stack_t *last, *new;
 
-	temp = *stack;
-	while (temp)
+	if (stack == NULL)
 	{
-		printf("%d\n", temp->n);
-		temp = temp->next;
+		fprintf(stderr, "L%d: stack not found\n", nline);
+		exit(EXIT_FAILURE);
+	}
+
+	new = malloc(sizeof(stack_t));
+	if (new == NULL)
+	{
+		fprintf(stderr, "Error: malloc failed\n");
+		free_stack(stack);
+		exit(EXIT_FAILURE);
+	}
+
+	last = NULL;
+	if (*stack)
+	{
+		last = *stack;
+		while (last->next)
+			last = last->next;
+		last->next = new;
+	}
+	else
+		*stack = new;
+	new->prev = last;
+	new->next = NULL;
+	new->n = arg.arg;
+}
+
+/**
+ * pop - removes the top element of stack
+ * @stack: pointer to the head node pointer of stack
+ * @nline: the line number
+ * Return: Nothing.
+ */
+void pop(stack_t **stack, unsigned int nline)
+{
+	if (stack == NULL || *stack == NULL)
+	{
+		fprintf(stderr, "L%d: can't pop an empty stack\n", nline);
+		exit(EXIT_FAILURE);
+	}
+	if ((*stack)->next != NULL)
+	{
+		*stack = (*stack)->next;
+		free((*stack)->prev);
+		(*stack)->prev = NULL;
+	}
+	else
+	{
+		free(*stack);
+		*stack = NULL;
 	}
 }
 
@@ -75,26 +120,22 @@ void free_stack(stack_t **stack)
 }
 
 /**
- * nop - does literally nothing
+ * swap - swaps the top two elements of the stack
  * @stack: pointer to the head node pointer of stack
  * @nline: the line number
  * Return: Nothing.
  */
-void nop(stack_t **stack, unsigned int nline)
+void swap(stack_t **stack, unsigned int nline)
 {
-	(void)stack;
-	(void)nline;
-}
+	int temp;
 
-/**
- * _isalpha - checks if int is in alphabet
- * @c: int
- * Return: 1 if yes, 0 if no
- */
-int _isalpha(int c)
-{
-	if (((c >= 'a') && (c <= 'z')) || ((c >= 'A') && (c <= 'Z')))
-		return (1);
-	else
-		return (0);
+	if (stack == NULL || *stack == NULL || !((*stack)->next))
+	{
+		fprintf(stderr, "L%d: can't swap, stack too short\n", nline);
+		exit(EXIT_FAILURE);
+	}
+
+	temp = (*stack)->n;
+	(*stack)->n = (*stack)->next->n;
+	(*stack)->next->n = temp;
 }
