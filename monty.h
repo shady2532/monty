@@ -49,11 +49,11 @@ typedef struct stack_s
  * Description: opcode and its function
  * for stack, queues, LIFO, FIFO Holberton project
  */
-typedef struct instruction_s
+typedef struct instruct_s
 {
 	char *opcode;
 	void (*f)(stack_t **stack, unsigned int line_number);
-} instruction_t;
+} instruct_t;
 
 /**
  * struct line - contents of line and corresponding number
@@ -89,12 +89,12 @@ void (*get_op_func(line_t line, meta_t *meta))(stack_t **, unsigned int);
 int _isalpha(int c);
 
 /* Parse functions */
-void parsefile(FILE *file);
-void parseline(line_t *line, char *buffer);
+void lineParser(line_t *line, char *buffer);
+void fileParser(FILE *file);
 
 /* Verification functions */
 bool comment_check(line_t line);
-void push_check(line_t line, meta_t *meta, char *opcode);
+void check(line_t line, meta_t *meta, char *opcode);
 
 /* Stack manipulation functions */
 void push(stack_t **stack, unsigned int nline);
@@ -111,14 +111,14 @@ void pstr(stack_t **stack, unsigned int nline);
 void free_stack(stack_t **stack);
 void nop(stack_t **stack, unsigned int nline);
 void qpush(stack_t **stack, unsigned int nline);
-void addqu(stack_t **stack, unsigned int nline);
-void addst(stack_t **stack, unsigned int nline);
+void que(stack_t **stack, unsigned int nline);
+void stackk(stack_t **stack, unsigned int nline);
 
 /* Math functions */
-void subop(stack_t **stack, unsigned int nline);
-void addop(stack_t **stack, unsigned int nline);
-void divop(stack_t **stack, unsigned int nline);
-void mulop(stack_t **stack, unsigned int nline);
-void modop(stack_t **stack, unsigned int nline);
+void add(stack_t **stack, unsigned int nline);
+void sub(stack_t **stack, unsigned int nline);
+void mul(stack_t **stack, unsigned int nline);
+void divv(stack_t **stack, unsigned int nline);
+void mod(stack_t **stack, unsigned int nline);
 
 #endif
