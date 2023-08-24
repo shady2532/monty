@@ -6,7 +6,7 @@
  * @nline: the line number
  * Return: Nothing.
  */
-void rotlop(stack_t **stack, unsigned int nline)
+void rotl(stack_t **stack, unsigned int nline)
 {
 	stack_t *last, *tmp;
 
@@ -35,7 +35,7 @@ void rotlop(stack_t **stack, unsigned int nline)
  * @nline: the line number
  * Return: Nothing.
  */
-void rotrop(stack_t **stack, unsigned int nline)
+void rotr(stack_t **stack, unsigned int nline)
 {
 	stack_t *last, *tmp;
 
